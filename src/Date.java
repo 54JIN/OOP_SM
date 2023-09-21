@@ -1,3 +1,6 @@
+/**
+ * @author Vivek Bhadkamkar (vab85), Sajin Saju (netID)
+ */
 public class Date implements Comparable<Date> {
     private int year;
     private int month;
@@ -35,7 +38,6 @@ public class Date implements Comparable<Date> {
      */
     public boolean isValid()
     {
-
         boolean isLeapYear = isLeapYear(this.year);
         boolean isRegMonth = isRegMonth(this.month);
         /* Need to check
@@ -61,14 +63,7 @@ public class Date implements Comparable<Date> {
             }
             else if(this.day == 28)
             {
-                if(isLeapYear)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return isLeapYear;
             }
         }
         else
@@ -87,7 +82,7 @@ public class Date implements Comparable<Date> {
     {
         for(int element : REGMONTH)
         {
-            if(element == this.month)
+            if(element == month)
             {
                 return true;
             }
@@ -129,22 +124,23 @@ public class Date implements Comparable<Date> {
         return 0;
     }
     public static void main (String[] args)
-    {
-      Date d = new Date(2000, 2, 28);
-      Date d2 = new Date(2001, 2, 28);
-      Date d3 = new Date(2016, 2, 28);
-      Date d4 = new Date(2016, 5, 31);
-      Date d5 = new Date(2016, 4, 31);
-      Date d6 = new Date("9/31/2023");
+        {
+          Date d = new Date(2000, 2, 28);
+          Date d2 = new Date(2001, 2, 28);
+          Date d3 = new Date(2016, 2, 28);
+          Date d4 = new Date(2016, 5, 31);
+          Date d5 = new Date(2016, 4, 31);
+          Date d6 = new Date("9/31/2023");
 
 
 
-        System.out.println(d.isValid());
-        System.out.println(d2.isValid());
-        System.out.println(d3.isValid());
-        System.out.println(d4.isValid());
-        System.out.println(d5.isValid());
-        System.out.println(d6.isValid());
+
+        System.out.println(d.isValid()); //Should be true
+        System.out.println(d2.isValid()); //Should be false
+        System.out.println(d3.isValid()); //Should be true
+        System.out.println(d4.isValid()); //Should be true
+        System.out.println(d5.isValid()); //Should be false
+        System.out.println(d6.isValid()); //Should be false
 
 
 
