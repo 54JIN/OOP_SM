@@ -14,7 +14,6 @@ public class Date implements Comparable<Date> {
     public static final int REGMONTHLENGTH = 31;
     public static final int NUMMONTHSINYEAR = 12;
     public static final int FEBRUARY = 2;
-
     public static final int CURRYEAR = 2023;
 
 
@@ -33,7 +32,7 @@ public class Date implements Comparable<Date> {
         this.year = Integer.parseInt(dateTokens[2]);
         //System.out.println(this.month + "/" + this.day + "/" + this.year); //Check if it gets the correct values.
 
-    } //METHOD NEEDS ERROR HANDLING TO BE IMPLEMENTED FOR BAD DATES. OR WE CAN IMPLEMENT IT IN EVENT CLASS.
+    } //NEEDS ERROR HANDLING TO BE IMPLEMENTED FOR BAD DATES. OR WE CAN IMPLEMENT IT IN EVENT CLASS.
 
 
     /**
@@ -50,7 +49,7 @@ public class Date implements Comparable<Date> {
             3. 29 days in February
             4. 28 days in February
             5. >31 days
-            6. If it's a future date (NOT FINISHED YET)
+            6. If it's a future date (NOT DONE YET)
         */
 
 
@@ -152,36 +151,90 @@ public class Date implements Comparable<Date> {
 
     }
     public static void main (String[] args)
-        {
-          Date d = new Date(2000, 2, 28);
-          Date d2 = new Date(2001, 2, 28);
-          Date d3 = new Date(2016, 2, 28);
-          Date d4 = new Date(2016, 5, 31);
-          Date d5 = new Date(2016, 4, 31);
-          Date d6 = new Date("9/30/2023");
-          Date d7 = new Date("9/30/2023");
-          Date d8 = new Date("10/31/2023");
-          Date d9 = new Date("10/31/2024");
-
-        System.out.println(d6.compareTo(d7));
-        System.out.println(d7.compareTo(d8));
-        System.out.println(d8.compareTo(d7));
-        System.out.println(d9.compareTo(d8));
-
-
-
-
+    {
+        notCurrDateTest();
+        validDateTest();
+        invalidDayTest();
+        thirtyOneDaysOnInvalidMonth();
+        invalidMonthTest();
+        leapYearTest();
+        notLeapYearTest();
+        equalDateTest();
+        earlierDateTest();
+        laterDateTest();
+        laterMonthTest();
+    }
+    private static void notCurrDateTest()
+    {
+        Date d = new Date("2/28/2003");
+        System.out.println("Expected output: false.");
+        System.out.println(d.isValid());
+    }
+    private static void validDateTest()
+    {
+        Date d = new Date("10/31/2024");
+        System.out.println("Expected output: true.");
+        System.out.println(d.isValid());
+    }
+    private static void invalidDayTest()
+    {
+            Date d = new Date("10/32/2024");
+            System.out.println("Expected output: false.");
             System.out.println(d.isValid());
-        System.out.println(d2.isValid());
-        System.out.println(d3.isValid());
-        System.out.println(d4.isValid());
-        System.out.println(d5.isValid());
-        System.out.println(d6.isValid());
-
-
-
-
 
     }
+    private static void thirtyOneDaysOnInvalidMonth()
+    {
+        Date d = new Date("9/31/2024");
+        System.out.println("Expected output: false.");
+        System.out.println(d.isValid());
+    }
+    private static void invalidMonthTest()
+    {
+        Date d = new Date("13/31/2024");
+        System.out.println("Expected output: false.");
+        System.out.println(d.isValid());
+    }
+    private static void leapYearTest()
+    {
+        Date d = new Date("2/28/2024");
+        System.out.println("Expected output: true.");
+        System.out.println(d.isValid());
+    }
+    private static void notLeapYearTest()
+    {
+        Date d = new Date("2/28/2025");
+        System.out.println("Expected output: false.");
+        System.out.println(d.isValid());
+    }
+    private static void equalDateTest()
+    {
+        Date d = new Date("2/28/2024");
+        Date d2 = new Date("2/28/2024");
+        System.out.println("Expected output: 0.");
+        System.out.println(d.compareTo(d2));
+    }
+    private static void earlierDateTest()
+    {
+        Date d = new Date("2/27/2024");
+        Date d2 = new Date("2/28/2024");
+        System.out.println("Expected output: -1.");
+        System.out.println(d.compareTo(d2));
+    }
+    private static void laterDateTest()
+    {
+        Date d = new Date("2/28/2024");
+        Date d2 = new Date("2/27/2024");
+        System.out.println("Expected output: 1.");
+        System.out.println(d.compareTo(d2));
+    }
+    private static void laterMonthTest()
+    {
+        Date d = new Date("2/28/2024");
+        Date d2 = new Date("3/1/2024");
+        System.out.println("Expected output: -1.");
+        System.out.println(d.compareTo(d2));
+    }
+
 
 }
