@@ -164,6 +164,8 @@ public class Date implements Comparable<Date> {
         laterDateTest();
         laterMonthTest();
     }
+
+    //add javadoc stuff for testcases
     private static void notCurrDateTest()
     {
         Date d = new Date("2/28/2003");
