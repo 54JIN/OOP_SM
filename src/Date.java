@@ -1,6 +1,7 @@
 /**
  * @author Vivek Bhadkamkar (vab85), Sajin Saju (netID)
  */
+import java.util.Calendar;
 public class Date implements Comparable<Date> {
     private int year;
     private int month;
@@ -32,9 +33,15 @@ public class Date implements Comparable<Date> {
         this.year = Integer.parseInt(dateTokens[2]);
         //System.out.println(this.month + "/" + this.day + "/" + this.year); //Check if it gets the correct values.
 
-    } //NEEDS ERROR HANDLING TO BE IMPLEMENTED FOR BAD DATES. OR WE CAN IMPLEMENT IT IN EVENT CLASS.
+    }
 
-
+  /* Need to check
+            1. 31 days
+            3. 29+ days in February
+            4. 28 days in February
+            5. 31+ days
+            6. If it's a future date
+    */
     /**
      *
      * @return true or false depending on whether the date is valid or not.
@@ -43,19 +50,23 @@ public class Date implements Comparable<Date> {
     {
         boolean isLeapYear = isLeapYear(this.year);
         boolean isRegMonth = isRegMonth(this.month);
-        /* Need to check
-            1. 31 days
-            2. 30 days in February
-            3. 29 days in February
-            4. 28 days in February
-            5. >31 days
-            6. If it's a future date (NOT DONE YET)
-        */
+        Calendar today = Calendar.getInstance();
 
-
-        if(this.day > REGMONTHLENGTH || this.month > NUMMONTHSINYEAR || this.month <= 0 || this.year < CURRYEAR) //Check if invalid date at all
+        if(this.day > REGMONTHLENGTH || this.month > NUMMONTHSINYEAR || this.month <= 0 ||
+                this.year < today.get(Calendar.YEAR)) //Check if invalid date at all
         {
             return false;
+        }
+        else if(this.year == today.get(Calendar.YEAR))
+        {
+            if(this.month < today.get(Calendar.MONTH))
+            {
+                return false;
+            }
+            else if (this.month == today.get(Calendar.MONTH))
+            {
+                return this.day >= today.get(Calendar.DAY_OF_MONTH);
+            }
         }
         else if (this.day == REGMONTHLENGTH) //Check for 31 day months
         {
@@ -76,7 +87,7 @@ public class Date implements Comparable<Date> {
         {
             return true;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -106,14 +117,7 @@ public class Date implements Comparable<Date> {
         {
             if(year % CENTENNIAL == 0)
             {
-                if(year % QUARTERCENTENNIAL == 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return year % QUARTERCENTENNIAL == 0;
             }
             else
             {
@@ -157,6 +161,8 @@ public class Date implements Comparable<Date> {
         invalidDayTest();
         thirtyOneDaysOnInvalidMonth();
         invalidMonthTest();
+        falseCalendarInstanceTest();
+        trueCalendarInstanceTest();
         leapYearTest();
         notLeapYearTest();
         equalDateTest();
@@ -195,6 +201,18 @@ public class Date implements Comparable<Date> {
     {
         Date d = new Date("13/31/2024");
         System.out.println("Expected output: false.");
+        System.out.println(d.isValid());
+    }
+    private static void falseCalendarInstanceTest()
+    {
+        Date d = new Date("8/24/2023");
+        System.out.println("Expected output: false.");
+        System.out.println(d.isValid());
+    }
+    private static void trueCalendarInstanceTest()
+    {
+        Date d = new Date("8/26/2023");
+        System.out.println("Expected output: true.");
         System.out.println(d.isValid());
     }
     private static void leapYearTest()
