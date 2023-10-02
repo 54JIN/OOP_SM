@@ -1,5 +1,6 @@
 /**
- * @author Vivek Bhadkamkar (vab85), Sajin Saju (netID)
+ * @author Vivek Bhadkamkar (@vab85)
+ * @author Sajin Saju (@ss3652)
  */
 public class Date implements Comparable<Date> {
     private int year;
@@ -15,10 +16,10 @@ public class Date implements Comparable<Date> {
     public static final int NUMMONTHSINYEAR = 12;
     public static final int FEBRUARY = 2;
     public static final int CURRYEAR = 2023;
+    public static final int CURRMONTH = 9;
+    public static final int CURRDAY = 28;
 
-
-
-    public Date(int year, int month, int day) //Constructor for testing expected outputs
+    public Date(int month, int day, int year) //Constructor for testing expected outputs
     {
         this.year = year;
         this.month = month;
@@ -32,51 +33,90 @@ public class Date implements Comparable<Date> {
         this.year = Integer.parseInt(dateTokens[2]);
         //System.out.println(this.month + "/" + this.day + "/" + this.year); //Check if it gets the correct values.
 
-    } //NEEDS ERROR HANDLING TO BE IMPLEMENTED FOR BAD DATES. OR WE CAN IMPLEMENT IT IN EVENT CLASS.
+    } // !!! NEEDS ERROR HANDLING TO BE IMPLEMENTED FOR BAD DATES. OR WE CAN IMPLEMENT IT IN EVENT CLASS. !!!
 
+    public String toString(){
+        return (month + "/" + day + "/" + year);
+    }
 
+    private int sixMonths(int currMonth){
+        return (currMonth+6)%12;
+    }
     /**
      *
      * @return true or false depending on whether the date is valid or not.
      */
     public boolean isValid()
     {
-        boolean isLeapYear = isLeapYear(this.year);
-        boolean isRegMonth = isRegMonth(this.month);
-        /* Need to check
-            1. 31 days
-            2. 30 days in February
-            3. 29 days in February
-            4. 28 days in February
-            5. >31 days
-            6. If it's a future date (NOT DONE YET)
-        */
+        try{
+            boolean isLeapYear = isLeapYear(this.year);
+            boolean isRegMonth = isRegMonth(this.month);
+            /* Need to check
+                1. 31 days
+                2. 30 days in February
+                3. 29 days in February
+                4. 28 days in February
+                5. >31 days
+                6. If it's a future date (NOT DONE YET)
+            */
 
 
-        if(this.day > REGMONTHLENGTH || this.month > NUMMONTHSINYEAR || this.month <= 0 || this.year < CURRYEAR) //Check if invalid date at all
-        {
+            if(this.day > REGMONTHLENGTH || this.month > NUMMONTHSINYEAR || this.month <= 0) //Check if invalid date at all
+            {
+                throw new NullPointerException(toString() + ": Invalid calendar date!");
+            }
+            else if(this.month == FEBRUARY) //Check February specifically
+            {
+                if(isLeapYear && this.day == 29){
+                    return isLeapYear;
+                }
+                else if(!isLeapYear && this.day == 29){
+                    return false;
+                }
+                else if( this.year < CURRYEAR || (this.year == CURRYEAR && this.month < CURRMONTH) || (this.year == CURRYEAR && this.month == CURRMONTH && this.day < CURRDAY)){
+                    throw new NullPointerException(toString() + ": Event date must be a future date!");
+                } 
+                else if( (this.year == CURRYEAR && ( ((CURRMONTH+6)/12) == 0) && this.month == CURRMONTH+6 && this.day > CURRDAY) || 
+                            (this.year == CURRYEAR && ( ((CURRMONTH+6)/12) == 0) && this.month > CURRMONTH+6) ||
+                            (this.year > CURRYEAR && ((CURRMONTH+6)/12 >= 1)  && this.month == sixMonths(CURRMONTH) && this.day > CURRDAY ) ||
+                            (this.year > CURRYEAR && ((CURRMONTH+6)/12 >= 1) ) && this.month > sixMonths(CURRMONTH) ){
+                                throw new NullPointerException(toString() + ": Event date must be within 6 months!");
+                            }
+                else if(this.day > 28)
+                {
+                    return false;
+                }
+                else if(this.day == 28)
+                {
+                    return isLeapYear;
+                }
+                else if (this.day < 28){
+                    return true;
+                }
+            }
+            else if (this.day == REGMONTHLENGTH) //Check for 31 day months
+            {
+                return isRegMonth;
+            }
+            else if( this.year < CURRYEAR || (this.year == CURRYEAR && this.month < CURRMONTH) || (this.year == CURRYEAR && this.month == CURRMONTH && this.day < CURRDAY)){
+                throw new NullPointerException(toString() + ": Event date must be a future date!");
+            } 
+            else if( (this.year == CURRYEAR && ( ((CURRMONTH+6)/12) == 0) && this.month == CURRMONTH+6 && this.day > CURRDAY) || 
+                        (this.year == CURRYEAR && ( ((CURRMONTH+6)/12) == 0) && this.month > CURRMONTH+6) ||
+                        (this.year > CURRYEAR && ((CURRMONTH+6)/12 >= 1)  && this.month == sixMonths(CURRMONTH) && this.day > CURRDAY ) ||
+                        (this.year > CURRYEAR && ((CURRMONTH+6)/12 >= 1) ) && this.month > sixMonths(CURRMONTH) ){
+                            throw new NullPointerException(toString() + ": Event date must be within 6 months!");
+                        }
+            else
+            {
+                return true;
+            }
             return false;
         }
-        else if (this.day == REGMONTHLENGTH) //Check for 31 day months
-        {
-            return isRegMonth;
+        catch (NullPointerException e) {
+            throw e;
         }
-        else if(this.month == FEBRUARY) //Check February specifically
-        {
-            if(this.day > 28)
-            {
-                return false;
-            }
-            else if(this.day == 28)
-            {
-                return isLeapYear;
-            }
-        }
-        else
-        {
-            return true;
-        }
-        return false;
+        
     }
 
     /**
@@ -163,6 +203,8 @@ public class Date implements Comparable<Date> {
         earlierDateTest();
         laterDateTest();
         laterMonthTest();
+        Date tempD = new Date("2/23/2024");
+        System.out.println(tempD.isValid());
     }
 
     //add javadoc stuff for testcases

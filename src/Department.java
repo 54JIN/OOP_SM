@@ -1,5 +1,6 @@
 /**
- * @author Vivek Bhadkamkar (vab85)
+ * @author Vivek Bhadkamkar (@vab85)
+ * @author Sajin Saju (@ss3652)
  */
 public enum Department
 {

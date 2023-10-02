@@ -1,5 +1,6 @@
 /**
- * @author Vivek Bhadkamkar (vab85)
+ * @author Vivek Bhadkamkar (@vab85)
+ * @author Sajin Saju (@ss3652)
  */
 
 import java.util.Scanner;
@@ -10,8 +11,8 @@ public enum Location
     ARC103("Allison Road Classroom", "Busch"),
     BE_AUD("Beck Hall", "Livingston"),
     TIL232("Tillett Hall", "Livingston"),
-    AB2225("Academic Building", "College Ave"),
-    MU302("Murray Hall", "College Ave");
+    AB2225("Academic Building", "College Avenue"),
+    MU302("Murray Hall", "College Avenue");
     
     public final String buildingName;
     public final String campus;
