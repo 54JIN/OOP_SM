@@ -5,11 +5,15 @@
 
 
 public class EventCalendar {
-
     private Event [] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
     public static final int NOT_FOUND = -1;
 
+    /**
+     *
+     * @param event
+     * @return Index of event if found, NOT_FOUND if no event found.
+     */
     private int find(Event event) { //search an event in the list
         for(int i = 0; i < events.length; i++){
             if(events[i] != null && events[i].compareTo(event) == 0 && events[i].equals(event) == true ){
@@ -19,26 +23,21 @@ public class EventCalendar {
         return NOT_FOUND;
      }
 
+    /**
+     * Grows array by 4 slots
+     */
     private void grow() { //increase the capacity of the array by 4
         Event[] temp = new Event[events.length + 4];
-        // System.out.println("Grwoing: ");
-
         for(int i = 0; i < events.length; i++){
             temp[i] = events[i];
         }
-        // int i = 0;
-        // while (i < events.length){
-        //     temp[i] = events[i];
-        //     System.out.println(i + ": " + events.toString());
-        //     i++;
-        // }
-        // while(i < temp.length){
-        //     System.out.println(temp[i]);
-        //     i++;
-        // }
+
         events = temp;
     }
 
+    /**
+     * Shrinks array by 4 slots
+     */
     private void shrink() {
         Event[] temp = new Event[events.length - 4];
         
@@ -48,6 +47,10 @@ public class EventCalendar {
         events = temp;
     }
 
+    /**
+     *
+     * @return false if there's an element in the last 4 spaces of the array, true if there are no elements in those 4 spaces
+     */
     private boolean last4(){
         for(int i = events.length-4; i < events.length; i++){
             if(events[i] != null){
@@ -57,6 +60,10 @@ public class EventCalendar {
         return true;
     }
 
+    /**
+     *
+     * @param j
+     */
     private void refactor(int j){
         Event[] temp = new Event[events.length];
         int eventsI = 0;
@@ -84,7 +91,11 @@ public class EventCalendar {
     }
 
 
-
+    /**
+     *
+     * @param event the event to be added
+     * @return true if event successfully added, false if not
+     */
     public boolean add(Event event) { //return true if an event was added onto the array otherwise return false 
         if(events == null){
             Event[] temp = new Event[4]; 
@@ -117,6 +128,11 @@ public class EventCalendar {
         return false;
     }
 
+    /**
+     *
+     * @param event the event to be removed
+     * @return true if event was removed, false if not
+     */
     public boolean remove (Event event) { //return true if an event was removed from the array otherwise return false
         if(events == null){
             return false;
@@ -133,6 +149,11 @@ public class EventCalendar {
         return false;
     }
 
+    /**
+     *
+     * @param event the event that is checked for existence in the array
+     * @return true if event was found in array, false if event is not in array
+     */
      public boolean contains (Event event) { //return true if an event was found within the array otherwise return false
          for(int i = 0; i < events.length; i++){
              if(events[i] != null && events[i].compareTo(event) == 0 && events[i].equals(event) == true ){
@@ -142,6 +163,9 @@ public class EventCalendar {
          return false;
      }
 
+    /**
+     * Prints the array of events without any sorting
+     */
     public void print() { //print the array as is
         if(events == null){
             System.out.println("Event calendar is empty!");    
@@ -157,6 +181,11 @@ public class EventCalendar {
             System.out.println("* end of event calendar *");
         }
     }
+
+    /**
+     * Helper method to sort events by date on the calendar
+     * @return temporary array with elements sorted by date on the calendar
+     */
     public Event[] sortedByDateTime(){
         Event[] temp = new Event[events.length];
         for(int i = 0; i < events.length; i++){
@@ -178,8 +207,11 @@ public class EventCalendar {
     }
 
 
-
-     public Event[] sortedByCampusBuilding(){
+    /**
+     * Helper method to sort events by campus building in alphabetical order
+     * @return temporary array with elements sorted by campus building in alphabetical order
+     */
+     private Event[] sortedByCampusBuilding(){
          Event[] temp = new Event[events.length];
          for(int i = 0; i < events.length; i++){
              if(events[i] != null){
@@ -199,63 +231,11 @@ public class EventCalendar {
          }
          return temp;
      }
-
-    public void printByDate()
-     { //ordered by date and timeslot
-        if(events == null)
-        {
-            System.out.println("Event calendar is empty!");    
-        }
-        else{
-            System.out.println("* Event calendar by event date and start time *");
-            // System.out.println(events.length);
-            Event[] temp = sortedByDateTime();
-            for(int i = 0; i < temp.length; i++) {
-                if(temp[i] != null){
-                    System.out.println(temp[i].toString());
-                }
-            }
-            System.out.println("* end of event calendar *");
-        }
-    }
-
-    public void printByCampus() { //ordered by campus and building/room
-        if(events == null){
-            System.out.println("Event calendar is empty!");
-         }
-         else{
-             System.out.println("* Event calendar by campus and building *");
-             // System.out.println(events.length);
-             Event[] temp = sortedByCampusBuilding();
-             for(int i = 0; i < temp.length; i++) {
-                 if(temp[i] != null){
-                     System.out.println(temp[i].toString());
-                 }
-             }
-             System.out.println("* end of event calendar *");
-         }
-    }
-
-    public void printByDepartment()
-     {
-         if(events == null)
-         {
-             System.out.println("Event calendar is empty!");
-         }
-         else{
-             System.out.println("* Event calendar by department *");
-             // System.out.println(events.length);
-             Event[] temp = sortedByDepartment();
-             for(int i = 0; i < temp.length; i++) {
-                 if(temp[i] != null){
-                     System.out.println(temp[i].toString());
-                 }
-             }
-             System.out.println("* end of event calendar *");
-         }
-     }
-
-    public Event[] sortedByDepartment()
+    /**
+     * Helper method to sort events by department in alphabetical order
+     * @return temporary array with elements sorted by department name in alphabetical order
+     */
+    private Event[] sortedByDepartment()
     {
         Event[] temp = new Event[events.length];
         for(int i = 0; i < events.length; i++){
@@ -278,62 +258,72 @@ public class EventCalendar {
 
         return temp;
     }
-
-    // !!! temp method - NEEDS TO BE DELETED !!!
-    public static Event createEvent(String date, String timeslot, String location, String contact, int duration){
-        Date tempD = new Date(date);
-
-        TimeSlot tempT = null;
-        if(timeslot.equals("M")){
-            tempT = TimeSlot.MORNING;
+    /**
+     * Prints the array of events sorted in chronological order
+     */
+    public void printByDate()
+     { //ordered by date and timeslot
+        if(events == null)
+        {
+            System.out.println("Event calendar is empty!");    
         }
-        else if(timeslot.equals("A")){
-            tempT = TimeSlot.AFTERNOON;
+        else{
+            System.out.println("* Event calendar by event date and start time *");
+            // System.out.println(events.length);
+            Event[] temp = sortedByDateTime();
+            for(int i = 0; i < temp.length; i++) {
+                if(temp[i] != null){
+                    System.out.println(temp[i].toString());
+                }
+            }
+            System.out.println("* end of event calendar *");
         }
-        else if(timeslot.equals("E")){
-            tempT = TimeSlot.EVENING;
-        }
-        
-        Location tempL = null;
-        if(location.equals("AB2225")){
-            tempL = Location.AB2225;
-        }
-        else if(location.equals("ARC103")){
-            tempL = Location.ARC103;
-        }
-        else if(location.equals("BE_AUD")){
-            tempL = Location.BE_AUD;
-        }
-        else if(location.equals("HLL114")){
-            tempL = Location.HLL114;
-        }
-        else if(location.equals("MU302")){
-            tempL = Location.MU302;
-        }
-        else if(location.equals("TIL232")){
-            tempL = Location.TIL232;
-        }
-
-        Contact tempC = null;
-        if(contact.equals("BAIT")){
-            tempC = new Contact(Department.BAIT, "bait@rutgers.edu");
-        }
-        else if(contact.equals("CS")){
-            tempC = new Contact(Department.CS, "cs@rutgers.edu");
-        }
-        else if(contact.equals("EE")){
-            tempC = new Contact(Department.EE, "ee@rutgers.edu");
-        }
-        else if(contact.equals("ITI")){
-            tempC = new Contact(Department.ITI, "iti@rutgers.edu");
-        }
-        else if(contact.equals("MATH")){
-            tempC = new Contact(Department.MATH, "math@rutgers.edu");
-        }
-
-        Event tempE = new Event(tempD,tempT,tempL,tempC, duration);
-        return tempE;
     }
+
+    /**
+     * Prints the array of events sorted by campus building in alphabetical order
+     */
+    public void printByCampus() { //ordered by campus and building/room
+        if(events == null){
+            System.out.println("Event calendar is empty!");
+         }
+         else{
+             System.out.println("* Event calendar by campus and building *");
+             // System.out.println(events.length);
+             Event[] temp = sortedByCampusBuilding();
+             for(int i = 0; i < temp.length; i++) {
+                 if(temp[i] != null){
+                     System.out.println(temp[i].toString());
+                 }
+             }
+             System.out.println("* end of event calendar *");
+         }
+    }
+
+    /**
+     * Prints the array of events sorted by department name in alphabetical order
+     */
+    public void printByDepartment()
+     {
+         if(events == null)
+         {
+             System.out.println("Event calendar is empty!");
+         }
+         else{
+             System.out.println("* Event calendar by department *");
+             // System.out.println(events.length);
+             Event[] temp = sortedByDepartment();
+             for(int i = 0; i < temp.length; i++) {
+                 if(temp[i] != null){
+                     System.out.println(temp[i].toString());
+                 }
+             }
+             System.out.println("* end of event calendar *");
+         }
+     }
+
+
+
     public static void main(String[] args)
     {
         Date tempD = new Date("11/29/2023");
@@ -350,19 +340,11 @@ public class EventCalendar {
         int duration1 = 85;
         Event tempE1 = new Event(tempD1,tempT1,tempL1,tempC1, duration1);
 
-        Event tempE2 = createEvent("10/07/2023", "M", "HLL114", "MATH", 65);
-        Event tempE3 = createEvent("12/23/2023", "A", "MU302", "ITI", 65);
-        Event tempE4 = createEvent("11/09/2023", "E", "HLL114", "BAIT", 65);
+
 
         EventCalendar tempEC = new EventCalendar();
 
-        System.out.println(tempEC.add(tempE) + "\n");
-        System.out.println(tempEC.add(tempE1) + "\n");
-        System.out.println(tempEC.add(tempE2) + "\n");
-        System.out.println(tempEC.add(tempE3) + "\n");
-        System.out.println(tempEC.add(tempE4) + "\n");
-
-        //tempEC.print();
+        tempEC.print();
 
         //tempEC.remove(tempE2);
 

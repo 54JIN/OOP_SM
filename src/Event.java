@@ -10,6 +10,14 @@ public class Event implements Comparable<Event> {
     private Contact contact; //include the department name and email
     private int duration; //in minutes
 
+    /**
+     *
+     * @param date Event date, cannot be more than 6 months in future
+     * @param startTime Starting time of event, morning, evening, or afternoon
+     * @param location Location of event at a place in Rutgers
+     * @param contact Email address & department associated with event
+     * @param duration How long the event will last, between 30 and 120 mins
+     */
     public Event(Date date, TimeSlot startTime, Location location, Contact contact, int duration){
         try{
             if(date.isValid()){
@@ -35,12 +43,24 @@ public class Event implements Comparable<Event> {
         }
     }
 
+    /**
+     *
+     * @return Location of event
+     */
     public Location getLocation(){
         return this.location;
     }
+
+    /**
+     *
+     * @return Event's contact
+     */
     public Contact getContact() {return this.contact;}
 
-
+    /**
+     *
+     * @return Time which the event ends
+     */
     public String endTime(){
         int hour = (duration/60) + ( ( duration%60 + startTime.minute )/60 );
 
@@ -54,11 +74,22 @@ public class Event implements Comparable<Event> {
         }
     }
 
+    /**
+     *
+     * @return String form of the event
+     */
+    @Override
     public String toString(){
         // !!! The time has to be accounted for to be AM or PM for start and end time !!!
         return("[Event Date: " + date.toString() + "] [Start: " + startTime.hour + ":" + (startTime.minute < 10? ("0" + startTime.minute) : startTime.minute) + startTime.AP + "] [End: " + endTime() + "] @" + location + " (" + location.buildingName + ", " + location.campus + ") [Contact: " + contact.getDepartment().departmentName + ", " + contact.getEmail() + "]");
     }
 
+    /**
+     *
+     * @param startTime start time of event
+     * @param otherE Another event to be compared to
+     * @return -1 if earlier, 0 if same time, 1 if later
+     */
     public int compareTimeSlot(TimeSlot startTime, Event otherE){
         boolean currAM = startTime.AP.equals("am");
             boolean otAM = otherE.startTime.AP.equals("am");
@@ -86,40 +117,11 @@ public class Event implements Comparable<Event> {
             }
             return 1;
     }
-
-    public int compareTimeSlot(TimeSlot startTime, TimeSlot otherE){
-        boolean currAM = startTime.AP.equals("am");
-            boolean otAM = otherE.AP.equals("am");
-            if(currAM){
-                if(currAM != otAM){
-                    return -1;
-                }
-            }
-            if(currAM == otAM){
-                int currH = startTime.hour;
-                int otH = otherE.hour;
-                if(currH < otH){
-                    return -1;
-                }
-                else if(currH == otH){
-                    int currM = startTime.minute;
-                    int otM = otherE.minute;
-                    if(currM < otM){
-                        return -1;
-                    }
-                    else if(currM == otM){
-                        return 0;
-                    }
-                }
-            }
-            return 1;
-    }
-
-    /*
-        return -1 if earlier
-        return 0 if same
-        return 1 if later
-    */
+    /**
+     *
+     * @param otherE the event to be compared.
+     * @return  -1 if earlier, 0 if same time, 1 if later
+     */
     @Override
     public int compareTo(Event otherE) {
         //comparing the date, the compared to date is later return -1
@@ -131,21 +133,11 @@ public class Event implements Comparable<Event> {
         }
         return 1;
     }
-
-    public int checkE(Date dateE, TimeSlot timeSlotE){
-        if(date.compareTo(dateE) == -1){
-            return -1;
-        }
-        else if(date.compareTo(dateE) == 0){
-            return compareTimeSlot(startTime, timeSlotE);
-        }
-        return 1;
-    }
-
-    /*
-        return true if same
-        return false if not
-    */
+    /**
+     *
+     * @param otherE the event to be compared
+     * @return true if same, false if not.
+     */
     public boolean equals(Event otherE){
         if(location.getBuildingName().equals(otherE.location.getBuildingName()) && location.getCampus().equals(otherE.location.getCampus())){
             if(compareTimeSlot(startTime, otherE) == 0){
@@ -155,14 +147,6 @@ public class Event implements Comparable<Event> {
         return false;
     }
 
-    public boolean equalE(TimeSlot timeSlotE, Location otherE){
-        if(location.getBuildingName().equals(otherE.getBuildingName()) && location.getCampus().equals(otherE.getCampus())){
-            if(compareTimeSlot(startTime, timeSlotE) == 0){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static void main(String[] args)
     {
@@ -180,7 +164,7 @@ public class Event implements Comparable<Event> {
         int duration2 = 65;
         Event temp2 = new Event(tempD2,tempT2,tempL2,tempC2, duration2);
 
-        System.out.println(temp.toString());
+        System.out.println(temp);
         System.out.println(temp.compareTo(temp2));
         System.out.println(temp.equals(temp2));
     }

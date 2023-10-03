@@ -18,13 +18,23 @@ public class Date implements Comparable<Date> {
     public static final int FEBRUARY = 2;
     private Calendar today = Calendar.getInstance();
 
-
+    /**
+     *
+     * @param month Month in Year
+     * @param day Day of the month
+     * @param year Year
+     */
     public Date(int month, int day, int year) //Constructor for testing expected outputs
     {
         this.year = year;
         this.month = month;
         this.day = day;
     }
+
+    /**
+     *
+     * @param dateString String for parsing a string input of Date.
+     */
     public Date(String dateString) //Constructor that parses from date format (Ex. 9/20/2023) to obtain month, day, and year.
     {
         String[] dateTokens = dateString.split("/");
@@ -33,14 +43,17 @@ public class Date implements Comparable<Date> {
         this.year = Integer.parseInt(dateTokens[2]);
         //System.out.println(this.month + "/" + this.day + "/" + this.year); //Check if it gets the correct values.
 
-    } // !!! NEEDS ERROR HANDLING TO BE IMPLEMENTED FOR BAD DATES. OR WE CAN IMPLEMENT IT IN EVENT CLASS. !!!
-
-    public String toString(){
-        return (month + "/" + day + "/" + year);
     }
 
-    private int sixMonths(int x){
-        return (x+6)%12;
+
+
+    /**
+     *
+     * @param month The current month represented as number from 1-12
+     * @return a value indicating whether the month is 6 months ahead or not.
+     */
+    private int sixMonths(int month){
+        return (month+6)%12;
     }
     /**
      *
@@ -51,73 +64,40 @@ public class Date implements Comparable<Date> {
         try{
             boolean isLeapYear = isLeapYear(this.year);
             boolean isRegMonth = isRegMonth(this.month);
-
-            /* Need to check
-                1. 31 days
-                2. 30 days in February
-                3. 29 days in February
-                4. 28 days in February
-                5. >31 days
-                6. If it's a future date (NOT DONE YET)
-            */
-
-
             if(this.day > REGMONTHLENGTH || this.month > NUMMONTHSINYEAR || this.month <= 0) //Check if invalid date at all
-            {
-                throw new NullPointerException(toString() + ": Invalid calendar date!");
-            }
+            {throw new NullPointerException(toString() + ": Invalid calendar date!");}
             else if(this.month == FEBRUARY) //Check February specifically
             {
-                if(isLeapYear && this.day == 29){
-                    return isLeapYear;
-                }
-                else if(!isLeapYear && this.day == 29){
-                    return false;
-                }
+                if(isLeapYear && this.day == 29){return isLeapYear;}
+                else if(!isLeapYear && this.day == 29){return false;}
                 else if(this.year < today.get(Calendar.YEAR) || (this.year == today.get(Calendar.YEAR) && this.month < ((today.get(Calendar.MONTH) + 1) + 1)) || (this.year == today.get(Calendar.YEAR) && this.month == (today.get(Calendar.MONTH) + 1) && this.day < today.get(Calendar.DAY_OF_MONTH))){
-                    throw new NullPointerException(toString() + ": Event date must be a future date!");
-                } 
+                    throw new NullPointerException(toString() + ": Event date must be a future date!");}
                 else if( (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month == (today.get(Calendar.MONTH) + 1)+6 && this.day > today.get(Calendar.DAY_OF_MONTH)) || 
                             (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month > (today.get(Calendar.MONTH) + 1)+6) ||
                             (this.year > today.get(Calendar.YEAR) && (((today.get(Calendar.MONTH) + 1)+6)/12 >= 1)  && this.month == sixMonths((today.get(Calendar.MONTH) + 1)) && this.day > today.get(Calendar.DAY_OF_MONTH) ) ||
                             (this.year > today.get(Calendar.YEAR) && (((today.get(Calendar.MONTH) + 1)+6)/12 >= 1) ) && this.month > sixMonths((today.get(Calendar.MONTH) + 1)) ){
-                                throw new NullPointerException(toString() + ": Event date must be within 6 months!");
-                            }
+                                throw new NullPointerException(toString() + ": Event date must be within 6 months!");}
                 else if(this.day > 28)
-                {
-                    return false;
-                }
+                {return false;}
                 else if(this.day == 28)
-                {
-                    return isLeapYear;
-                }
-                else if (this.day < 28){
-                    return true;
-                }
+                {return isLeapYear;}
+                else if (this.day < 28)
+                {return true;}
             }
             else if (this.day == REGMONTHLENGTH) //Check for 31 day months
-            {
-                return isRegMonth;
-            }
+            {return isRegMonth;}
             else if( this.year < today.get(Calendar.YEAR) || (this.year == today.get(Calendar.YEAR) && this.month < (today.get(Calendar.MONTH) + 1)) || (this.year == today.get(Calendar.YEAR) && this.month == (today.get(Calendar.MONTH) + 1) && this.day < today.get(Calendar.DAY_OF_MONTH))){
-                throw new NullPointerException(toString() + ": Event date must be a future date!");
-            } 
+                throw new NullPointerException(toString() + ": Event date must be a future date!");}
             else if( (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month == (today.get(Calendar.MONTH) + 1)+6 && this.day > today.get(Calendar.DAY_OF_MONTH)) || 
                         (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month > (today.get(Calendar.MONTH) + 1)+6) ||
                         (this.year > today.get(Calendar.YEAR) && (((today.get(Calendar.MONTH) + 1)+6)/12 >= 1)  && this.month == sixMonths((today.get(Calendar.MONTH) + 1)) && this.day > today.get(Calendar.DAY_OF_MONTH) ) ||
                         (this.year > today.get(Calendar.YEAR) && (((today.get(Calendar.MONTH) + 1)+6)/12 >= 1) ) && this.month > sixMonths((today.get(Calendar.MONTH) + 1)) ){
-                            throw new NullPointerException(toString() + ": Event date must be within 6 months!");
-                        }
+                            throw new NullPointerException(toString() + ": Event date must be within 6 months!");}
             else
-            {
-                return true;
-            }
+            {return true;}
             return false;
         }
-        catch (NullPointerException e) {
-            throw e;
-        }
-        
+        catch (NullPointerException e) {throw e;}
     }
 
     /**
@@ -183,14 +163,15 @@ public class Date implements Comparable<Date> {
                 if(this.day > date.day) return 1;
                 else if(this.day < date.day) return -1;
                 else return 0;
-
-
             }
         }
-
-
-
     }
+    /**
+     *
+     * @return String form of the date.
+     */
+    @Override
+    public String toString(){return (month + "/" + day + "/" + year);}
     public static void main (String[] args)
     {
         notCurrDateTest();
