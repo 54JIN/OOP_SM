@@ -164,7 +164,7 @@ public class Event implements Comparable<Event> {
     }
 
 
- /*   public static void main(String[] args)
+   public static void main(String[] args)
     {
         Date tempD = new Date("11/29/2023");
         TimeSlot tempT = TimeSlot.MORNING;
@@ -183,5 +183,12 @@ public class Event implements Comparable<Event> {
         System.out.println(temp);
         System.out.println(temp.compareTo(temp2));
         System.out.println(temp.equals(temp2));
-    }*/
+    }
+    private static void differentLocations()
+    {
+        Date d = new Date("11/21/23");
+        Date d2 = new Date("11/21/23");
+        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"). 120);
+        Event e2 = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"). 120);
+    }
 }

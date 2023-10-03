@@ -117,7 +117,12 @@ public class Date implements Comparable<Date> {
                 {return true;}
             }
             else if (this.day == REGMONTHLENGTH) //Check for 31 day months
-            {return isRegMonth;}
+            {
+                if(isRegMonth == false)
+                {throw new NullPointerException(toString() + ": Invalid calendar date!");}
+                else
+                {return true;}
+            }
             else if( this.year < today.get(Calendar.YEAR) || (this.year == today.get(Calendar.YEAR) && this.month < (today.get(Calendar.MONTH) + 1)) || (this.year == today.get(Calendar.YEAR) && this.month == (today.get(Calendar.MONTH) + 1) && this.day < today.get(Calendar.DAY_OF_MONTH))){
                 throw new NullPointerException(toString() + ": Event date must be a future date!");}
             else if( (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month == (today.get(Calendar.MONTH) + 1)+6 && this.day > today.get(Calendar.DAY_OF_MONTH)) || 
@@ -206,66 +211,163 @@ public class Date implements Comparable<Date> {
     @Override
     public String toString(){return (month + "/" + day + "/" + year);}
 
-    /*public static void main (String[] args)
+    public static void main (String[] args)
     {
+
         notCurrDateTest();
         validDateTest();
         invalidDayTest();
         thirtyOneDaysOnInvalidMonth();
         invalidMonthTest();
+        invalidMonthTest2();
         leapYearTest();
         notLeapYearTest();
-        equalDateTest();
+        /*equalDateTest();
         earlierDateTest();
         laterDateTest();
-        laterMonthTest();
-        Date tempD = new Date("3/23/2024");
-        System.out.println(tempD.isValid());
-    }*/
+        laterMonthTest();*/
+    }
 
-    /*add javadoc stuff for testcases
+
     private static void notCurrDateTest()
     {
-        Date d = new Date("2/28/2003");
-        System.out.println("Expected output: false.");
-        System.out.println(d.isValid());
+        boolean passed=false;
+                try {
+                    Date d = new Date("10/1/2023");
+                    System.out.println("Expected Output: should print an exception.");
+                    d.isValid();
+                }
+                catch(NullPointerException e){
+                    System.out.println(e.getMessage());
+                    passed=true;
+                }
+                if(passed)
+                {
+                    System.out.println("Test case passed.");
+                }
+                else {
+                    System.out.println("Test case failed");
+                }
     }
     private static void validDateTest()
     {
-        Date d = new Date("10/31/2024");
+        Date d = new Date("10/31/2023");
         System.out.println("Expected output: true.");
         System.out.println(d.isValid());
     }
     private static void invalidDayTest()
     {
-            Date d = new Date("10/32/2024");
-            System.out.println("Expected output: false.");
-            System.out.println(d.isValid());
-
+        boolean passed=false;
+        try {
+            Date d = new Date("10/32/2023");
+            System.out.println("Expected Output: 10/32/2023: Invalid calendar date!");
+            d.isValid();
+        }
+        catch(NullPointerException e){
+            System.out.println(e.getMessage());
+            passed=true;
+        }
+        if(passed)
+        {
+            System.out.println("Test case passed.");
+        }
+        else
+        {
+            System.out.println("Test case failed");
+        }
     }
     private static void thirtyOneDaysOnInvalidMonth()
     {
-        Date d = new Date("9/31/2024");
-        System.out.println("Expected output: false.");
-        System.out.println(d.isValid());
+        boolean passed=false;
+        try {
+            Date d = new Date("11/31/2023");
+            System.out.println(d);
+            System.out.println("Expected Output: 11/31/2023: Invalid calendar date!");
+            d.isValid();
+        }
+        catch(NullPointerException e)
+        {
+            System.out.println(e.getMessage());
+            passed=true;
+        }
+        if(passed)
+        {
+            System.out.println("Test case passed.");
+        }
+        else
+        {
+            System.out.println("Test case failed");
+        }
     }
     private static void invalidMonthTest()
     {
-        Date d = new Date("13/31/2024");
-        System.out.println("Expected output: false.");
-        System.out.println(d.isValid());
+        boolean passed=false;
+        try {
+            Date d = new Date("13/31/2023");
+            System.out.println("Expected Output: 13/31/2023: Invalid calendar date!");
+            d.isValid();
+        }
+        catch(NullPointerException e){
+            System.out.println(e.getMessage());
+            passed=true;
+        }
+        if(passed)
+        {
+            System.out.println("Test case passed.");
+        }
+        else
+        {
+            System.out.println("Test case failed");
+        }
+    }
+    private static void invalidMonthTest2()
+    {
+        boolean passed=false;
+        try {
+            Date d = new Date("0/31/2023");
+            System.out.println("Expected Output: 0/31/2023: Invalid calendar date!");
+            d.isValid();
+        }
+        catch(NullPointerException e){
+            System.out.println(e.getMessage());
+            passed=true;
+        }
+        if(passed)
+        {
+            System.out.println("Test case passed.");
+        }
+        else
+        {
+            System.out.println("Test case failed");
+        }
     }
     private static void leapYearTest()
     {
         Date d = new Date("2/28/2024");
         System.out.println("Expected output: true.");
         System.out.println(d.isValid());
+
     }
     private static void notLeapYearTest()
     {
-        Date d = new Date("2/28/2025");
-        System.out.println("Expected output: false.");
-        System.out.println(d.isValid());
+        boolean passed=false;
+        try {
+            Date d = new Date("2/28/2023");
+            System.out.println("Expected Output: 2/28/2023: Event date must be a future date!");
+            d.isValid();
+        }
+        catch(NullPointerException e){
+            System.out.println(e.getMessage());
+            passed=true;
+        }
+        if(passed)
+        {
+            System.out.println("Test case passed.");
+        }
+        else
+        {
+            System.out.println("Test case failed");
+        }
     }
     private static void equalDateTest()
     {
@@ -295,6 +397,6 @@ public class Date implements Comparable<Date> {
         System.out.println("Expected output: -1.");
         System.out.println(d.compareTo(d2));
     }
-    */
+
 
 }
