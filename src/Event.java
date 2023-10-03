@@ -163,18 +163,103 @@ public class Event implements Comparable<Event> {
         return false;
     }
 
-
+    /**
+     * Test bed main for Event
+     * @param args
+     */
    public static void main(String[] args)
     {
         differentLocations();
+        differentDates();
+        differentTimeSlots();
+        differentDateAndTimeSlot();
+        differentTimeSlotsAndLocation();
+        differentDateAndLocation();
+        everythingSame();
     }
+
+    /**
+     * Tests if two events with different locations are equal
+     */
     private static void differentLocations()
     {
-        Date d = new Date("11/21/23");
-        Date d2 = new Date("11/21/23");
+        Date d = new Date("11/21/2023");
+        Date d2 = new Date("11/21/2023");
         Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
         Event e2 = new Event(d, TimeSlot.MORNING, Location.AB2225, new Contact(Department.MATH, "math@rutgers.edu"), 120);
         System.out.println("Expected output: false");
+        System.out.println(e.equals(e2));
+    }
+    /**
+     * Tests if two events with different dates are equal
+     */
+    private static void differentDates()
+    {
+        Date d = new Date("11/21/2023");
+        Date d2 = new Date("11/22/2023");
+        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        Event e2 = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        System.out.println("Expected output: false");
+        System.out.println(e.equals(e2));
+    }
+    /**
+     * Tests if two events with different timeslots are equal
+     */
+    private static void differentTimeSlots()
+    {
+        Date d = new Date("11/21/2023");
+        Date d2 = new Date("11/21/2023");
+        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        Event e2 = new Event(d, TimeSlot.AFTERNOON, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        System.out.println("Expected output: false");
+        System.out.println(e.equals(e2));
+    }
+    /**
+     * Tests if two events with different timeslots and locations are equal
+     */
+    private static void differentTimeSlotsAndLocation()
+    {
+        Date d = new Date("11/21/2023");
+        Date d2 = new Date("11/21/2023");
+        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        Event e2 = new Event(d, TimeSlot.AFTERNOON, Location.HLL114, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        System.out.println("Expected output: false");
+        System.out.println(e.equals(e2));
+    }
+    /**
+     * Tests if two events with different locations and dates are equal
+     */
+    private static void differentDateAndLocation()
+    {
+        Date d = new Date("11/21/2023");
+        Date d2 = new Date("11/22/2023");
+        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        Event e2 = new Event(d, TimeSlot.MORNING, Location.HLL114, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        System.out.println("Expected output: false");
+        System.out.println(e.equals(e2));
+    }
+    /**
+     * Tests if two events with different dates and timeslots are equal
+     */
+    private static void differentDateAndTimeSlot()
+    {
+        Date d = new Date("11/21/2023");
+        Date d2 = new Date("11/22/2023");
+        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        Event e2 = new Event(d, TimeSlot.AFTERNOON, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        System.out.println("Expected output: false");
+        System.out.println(e.equals(e2));
+    }
+    /**
+     * Tests if two identical events are equal
+     */
+    private static void everythingSame()
+    {
+        Date d = new Date("11/21/2023");
+        Date d2 = new Date("11/21/2023");
+        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        Event e2 = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        System.out.println("Expected output: true");
         System.out.println(e.equals(e2));
     }
 }

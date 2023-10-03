@@ -211,6 +211,10 @@ public class Date implements Comparable<Date> {
     @Override
     public String toString(){return (month + "/" + day + "/" + year);}
 
+    /**
+     * Testbed main for Date
+     * @param args arguments from console
+     */
     public static void main (String[] args)
     {
 
@@ -228,7 +232,9 @@ public class Date implements Comparable<Date> {
         laterMonthTest();*/
     }
 
-
+    /**
+     * Tests an invalid date
+     */
     private static void notCurrDateTest()
     {
         boolean passed=false;
@@ -249,6 +255,10 @@ public class Date implements Comparable<Date> {
                     System.out.println("Test case failed");
                 }
     }
+
+    /**
+     * Tests a valid date
+     */
     private static void validDateTest()
     {
         Date d = new Date("10/31/2023");
@@ -276,6 +286,10 @@ public class Date implements Comparable<Date> {
             System.out.println("Test case failed");
         }
     }
+
+    /**
+     * Tests an invalid 31 days on a month with only 30 days
+     */
     private static void thirtyOneDaysOnInvalidMonth()
     {
         boolean passed=false;
@@ -299,6 +313,10 @@ public class Date implements Comparable<Date> {
             System.out.println("Test case failed");
         }
     }
+
+    /**
+     * Tests an invalid month number > 12
+     */
     private static void invalidMonthTest()
     {
         boolean passed=false;
@@ -320,6 +338,10 @@ public class Date implements Comparable<Date> {
             System.out.println("Test case failed");
         }
     }
+
+    /**
+     * Tests an invalid month number < 1
+     */
     private static void invalidMonthTest2()
     {
         boolean passed=false;
@@ -341,6 +363,10 @@ public class Date implements Comparable<Date> {
             System.out.println("Test case failed");
         }
     }
+
+    /**
+     * Test a valid leap year date
+     */
     private static void leapYearTest()
     {
         Date d = new Date("2/28/2024");
@@ -348,6 +374,9 @@ public class Date implements Comparable<Date> {
         System.out.println(d.isValid());
 
     }
+    /**
+     * Tests an invalid leap year date
+     */
     private static void notLeapYearTest()
     {
         boolean passed=false;
@@ -369,34 +398,4 @@ public class Date implements Comparable<Date> {
             System.out.println("Test case failed");
         }
     }
-    private static void equalDateTest()
-    {
-        Date d = new Date("2/28/2024");
-        Date d2 = new Date("2/28/2024");
-        System.out.println("Expected output: 0.");
-        System.out.println(d.compareTo(d2));
-    }
-    private static void earlierDateTest()
-    {
-        Date d = new Date("2/27/2024");
-        Date d2 = new Date("2/28/2024");
-        System.out.println("Expected output: -1.");
-        System.out.println(d.compareTo(d2));
-    }
-    private static void laterDateTest()
-    {
-        Date d = new Date("2/28/2024");
-        Date d2 = new Date("2/27/2024");
-        System.out.println("Expected output: 1.");
-        System.out.println(d.compareTo(d2));
-    }
-    private static void laterMonthTest()
-    {
-        Date d = new Date("2/28/2024");
-        Date d2 = new Date("3/1/2024");
-        System.out.println("Expected output: -1.");
-        System.out.println(d.compareTo(d2));
-    }
-
-
 }
