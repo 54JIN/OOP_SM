@@ -117,6 +117,9 @@ public class EventOrganizer
                     else if(commands[0].equals("PC")){
                         activeCalendar.printByCampus();
                     }
+                    else if(commands[0].equals("PD")){
+                        activeCalendar.printByDepartment();
+                    }
                     // for(int i = 0; i < commands.length; i++){
                     //     System.out.println(commands[i]);
                     // }

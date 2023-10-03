@@ -3,15 +3,21 @@
  * @author Sajin Saju (@ss3652)
  */
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+
 public class EventCalendar {
+
     private Event [] events; //the array holding the list of events
     private int numEvents; //current number of events in the array
+    public static final int NOT_FOUND = -1;
 
-    // private int find(Event event) { //search an event in the list
-
-    // }
+    private int find(Event event) { //search an event in the list
+        for(int i = 0; i < events.length; i++){
+            if(events[i] != null && events[i].compareTo(event) == 0 && events[i].equals(event) == true ){
+                return i;
+            }
+        }
+        return NOT_FOUND;
+     }
 
     private void grow() { //increase the capacity of the array by 4
         Event[] temp = new Event[events.length + 4];
@@ -77,14 +83,7 @@ public class EventCalendar {
         events = temp;
     }
 
-    public boolean eventExist(Event event){
-        for(int i = 0; i < events.length; i++){
-            if(events[i] != null && events[i].compareTo(event) == 0 && events[i].equals(event) == true ){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     public boolean add(Event event) { //return true if an event was added onto the array otherwise return false 
         if(events == null){
@@ -93,7 +92,7 @@ public class EventCalendar {
             events = temp;
             return true;
         }
-        if(eventExist(event)){
+        if(contains(event)){
             return false;
         }
         int i = 0;
@@ -117,55 +116,8 @@ public class EventCalendar {
         // System.out.println("Finished events length: " + events.length);
         return false;
     }
-    public boolean eventExist(String date, String timeslot, String location) {
-        try{
-            Date tempD = new Date(date);
 
-            TimeSlot tempT = null;
-            if(timeslot.equals("morning")){
-                tempT = TimeSlot.MORNING;
-            }
-            else if(timeslot.equals("afternoon")){
-                tempT = TimeSlot.AFTERNOON;
-            }
-            else if(timeslot.equals("evening")){
-                tempT = TimeSlot.EVENING;
-            }
-
-            // System.out.println("TimeSlot: " + tempT);
-
-            Location tempL = null;
-            if(location.equals("AB2225")){
-                tempL = Location.AB2225;
-            }
-            else if(location.equals("ARC103")){
-                tempL = Location.ARC103;
-            }
-            else if(location.equals("BE_AUD")){
-                tempL = Location.BE_AUD;
-            }
-            else if(location.equals("HLL114")){
-                tempL = Location.HLL114;
-            }
-            else if(location.equals("MU302")){
-                tempL = Location.MU302;
-            }
-            else if(location.equals("TIL232")){
-                tempL = Location.TIL232;
-            }
-
-            for(int i = 0; i < events.length; i++){
-                if(events[i] != null && events[i].checkE(tempD, tempT) == 0 && events[i].equalE(tempT, tempL) == true){
-                    return true;
-                }
-            }
-            return false;
-        }
-        catch (NullPointerException e) {
-            throw e;
-        }
-    }
-    public boolean remove (Event event) { //return true if an event was removed from the array otherwise return false 
+    public boolean remove (Event event) { //return true if an event was removed from the array otherwise return false
         if(events == null){
             return false;
         }
@@ -181,9 +133,14 @@ public class EventCalendar {
         return false;
     }
 
-    // public boolean contains (Event event) { //return true if an event was found within the array otherwise return false 
-
-    // }
+     public boolean contains (Event event) { //return true if an event was found within the array otherwise return false
+         for(int i = 0; i < events.length; i++){
+             if(events[i] != null && events[i].compareTo(event) == 0 && events[i].equals(event) == true ){
+                 return true;
+             }
+         }
+         return false;
+     }
 
     public void print() { //print the array as is
         if(events == null){
@@ -220,55 +177,33 @@ public class EventCalendar {
         return temp;
     }
 
-    // private Event[] sortedByCampus(Location location){
-    //     Event[] temp = new Event[events.length];
-    //     for(int i = 0; i < events.length; i++){
-    //         if(events[i] != null && events[i].getLocation().getBuildingName().equals(location.getBuildingName())){
-    //             temp[i] = events[i];
-    //         }
-    //         System.out.println(i+ " Location-"+location.getBuildingName()+": " + temp[i].toString() );
-    //     }
-    //     return temp;
-    // }
 
-    // public Event[] sortedByCampusBuilding(){
-    //     Event[] temp = new Event[events.length];
 
-    //     Event[] AllisonRoad = sortedByCampus(Location.ARC103);
-    //     Event[] HillCenter = sortedByCampus(Location.HLL114);
-    //     Event[] AcademicBuilding = sortedByCampus(Location.AB2225);
-    //     Event[] MurrayHall = sortedByCampus(Location.MU302);
-    //     Event[] BeckHall = sortedByCampus(Location.BE_AUD);
-    //     Event[] TilletHall = sortedByCampus(Location.TIL232);
+     public Event[] sortedByCampusBuilding(){
+         Event[] temp = new Event[events.length];
+         for(int i = 0; i < events.length; i++){
+             if(events[i] != null){
+                 temp[i] = events[i];
+             }
+         }
+         for (int i = 0; i < temp.length; i++) {
+             for (int j = i + 1; j < temp.length; j++) {
+                 Event tempE = null;
+                 if (temp[i] != null && temp[j] != null && temp[i].getLocation().compareTo(temp[j].getLocation()) > 0)
+                 {
+                     tempE = temp[i];
+                     temp[i] = temp[j];
+                     temp[j] = tempE;
+                 }
+             }
+         }
+         return temp;
+     }
 
-    //     int i = 0;
-    //     System.out.println("Been Here Beofre: " + AllisonRoad.length);
-    //     for(int j = 0; j < AllisonRoad.length; j++){
-    //         if(AllisonRoad[j] != null){
-    //             System.out.println("Check" + AllisonRoad[j].toString());
-    //             temp[i] = AllisonRoad[j];
-    //         }
-    //         i++;
-    //     }
-    //     for(int j = 0; j < HillCenter.length; j++){
-    //         if(HillCenter[j] != null){
-    //             System.out.println("Check" + HillCenter[j].toString());
-    //             temp[i] = HillCenter[j];
-    //         }
-    //         i++;
-    //     }
-    //     for(int j = 0; j < AcademicBuilding.length; j++){
-    //         if(AllisonRoad[j] != null){
-    //             System.out.println("Check" + AcademicBuilding[j].toString());
-    //             temp[i] = AcademicBuilding[j];
-    //         }
-    //         i++;
-    //     }
-    //     return temp;
-    // }
-
-    public void printByDate() { //ordered by date and timeslot
-        if(events == null){
+    public void printByDate()
+     { //ordered by date and timeslot
+        if(events == null)
+        {
             System.out.println("Event calendar is empty!");    
         }
         else{
@@ -285,24 +220,63 @@ public class EventCalendar {
     }
 
     public void printByCampus() { //ordered by campus and building/room
-        // if(events == null){
-        //     System.out.println("Event calendar is empty!");    
-        // }
-        // else{
-        //     System.out.println("* Event calendar by campus and building *");
-        //     // System.out.println(events.length);
-        //     Event[] temp = sortedByCampusBuilding();
-        //     for(int i = 0; i < temp.length; i++) {
-        //         if(temp[i] != null){
-        //             System.out.println(temp[i].toString());
-        //         }
-        //     }
-        //     System.out.println("* end of event calendar *");
-        // }
+        if(events == null){
+            System.out.println("Event calendar is empty!");
+         }
+         else{
+             System.out.println("* Event calendar by campus and building *");
+             // System.out.println(events.length);
+             Event[] temp = sortedByCampusBuilding();
+             for(int i = 0; i < temp.length; i++) {
+                 if(temp[i] != null){
+                     System.out.println(temp[i].toString());
+                 }
+             }
+             System.out.println("* end of event calendar *");
+         }
     }
 
-    public void printByDepartment() { //ordered by department
+    public void printByDepartment()
+     {
+         if(events == null)
+         {
+             System.out.println("Event calendar is empty!");
+         }
+         else{
+             System.out.println("* Event calendar by department *");
+             // System.out.println(events.length);
+             Event[] temp = sortedByDepartment();
+             for(int i = 0; i < temp.length; i++) {
+                 if(temp[i] != null){
+                     System.out.println(temp[i].toString());
+                 }
+             }
+             System.out.println("* end of event calendar *");
+         }
+     }
 
+    public Event[] sortedByDepartment()
+    {
+        Event[] temp = new Event[events.length];
+        for(int i = 0; i < events.length; i++){
+            if(events[i] != null){
+                temp[i] = events[i];
+            }
+        }
+        for (int i = 0; i < temp.length; i++) {
+            for (int j = i + 1; j < temp.length; j++) {
+                Event tempE = null;
+                if (temp[i] != null && temp[j] != null && temp[i].getContact().getDepartment().compareTo(temp[j].getContact().getDepartment()) > 0)
+                {
+                    tempE = temp[i];
+                    temp[i] = temp[j];
+                    temp[j] = tempE;
+                }
+            }
+        }
+
+
+        return temp;
     }
 
     // !!! temp method - NEEDS TO BE DELETED !!!
@@ -376,23 +350,29 @@ public class EventCalendar {
         int duration1 = 85;
         Event tempE1 = new Event(tempD1,tempT1,tempL1,tempC1, duration1);
 
-        Event tempE2 = createEvent("10/07/2023", "M", "HLL114", "BAIT", 65);
-        Event tempE3 = createEvent("12/23/2023", "A", "HLL114", "BAIT", 65);
+        Event tempE2 = createEvent("10/07/2023", "M", "HLL114", "MATH", 65);
+        Event tempE3 = createEvent("12/23/2023", "A", "MU302", "ITI", 65);
         Event tempE4 = createEvent("11/09/2023", "E", "HLL114", "BAIT", 65);
 
         EventCalendar tempEC = new EventCalendar();
 
-        System.out.println(tempEC.add(tempE) + "\n");   
-        System.out.println(tempEC.add(tempE1) + "\n");   
-        System.out.println(tempEC.add(tempE2) + "\n");   
-        System.out.println(tempEC.add(tempE3) + "\n");   
-        System.out.println(tempEC.add(tempE4) + "\n");   
+        System.out.println(tempEC.add(tempE) + "\n");
+        System.out.println(tempEC.add(tempE1) + "\n");
+        System.out.println(tempEC.add(tempE2) + "\n");
+        System.out.println(tempEC.add(tempE3) + "\n");
+        System.out.println(tempEC.add(tempE4) + "\n");
 
-        tempEC.print();
+        //tempEC.print();
 
-        tempEC.remove(tempE2);
+        //tempEC.remove(tempE2);
 
-        tempEC.print();
+        //tempEC.print();
+
+        tempEC.printByCampus();
+
+        tempEC.printByDepartment();
+
+        tempEC.printByDate();
 
     }
 }

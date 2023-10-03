@@ -2,6 +2,7 @@
  * @author Vivek Bhadkamkar (@vab85)
  * @author Sajin Saju (@ss3652)
  */
+import java.util.Calendar;
 public class Date implements Comparable<Date> {
     private int year;
     private int month;
@@ -15,9 +16,8 @@ public class Date implements Comparable<Date> {
     public static final int REGMONTHLENGTH = 31;
     public static final int NUMMONTHSINYEAR = 12;
     public static final int FEBRUARY = 2;
-    public static final int CURRYEAR = 2023;
-    public static final int CURRMONTH = 9;
-    public static final int CURRDAY = 28;
+    private Calendar today = Calendar.getInstance();
+
 
     public Date(int month, int day, int year) //Constructor for testing expected outputs
     {
@@ -39,8 +39,8 @@ public class Date implements Comparable<Date> {
         return (month + "/" + day + "/" + year);
     }
 
-    private int sixMonths(int currMonth){
-        return (currMonth+6)%12;
+    private int sixMonths(int x){
+        return (x+6)%12;
     }
     /**
      *
@@ -51,6 +51,7 @@ public class Date implements Comparable<Date> {
         try{
             boolean isLeapYear = isLeapYear(this.year);
             boolean isRegMonth = isRegMonth(this.month);
+
             /* Need to check
                 1. 31 days
                 2. 30 days in February
@@ -73,13 +74,13 @@ public class Date implements Comparable<Date> {
                 else if(!isLeapYear && this.day == 29){
                     return false;
                 }
-                else if( this.year < CURRYEAR || (this.year == CURRYEAR && this.month < CURRMONTH) || (this.year == CURRYEAR && this.month == CURRMONTH && this.day < CURRDAY)){
+                else if(this.year < today.get(Calendar.YEAR) || (this.year == today.get(Calendar.YEAR) && this.month < ((today.get(Calendar.MONTH) + 1) + 1)) || (this.year == today.get(Calendar.YEAR) && this.month == (today.get(Calendar.MONTH) + 1) && this.day < today.get(Calendar.DAY_OF_MONTH))){
                     throw new NullPointerException(toString() + ": Event date must be a future date!");
                 } 
-                else if( (this.year == CURRYEAR && ( ((CURRMONTH+6)/12) == 0) && this.month == CURRMONTH+6 && this.day > CURRDAY) || 
-                            (this.year == CURRYEAR && ( ((CURRMONTH+6)/12) == 0) && this.month > CURRMONTH+6) ||
-                            (this.year > CURRYEAR && ((CURRMONTH+6)/12 >= 1)  && this.month == sixMonths(CURRMONTH) && this.day > CURRDAY ) ||
-                            (this.year > CURRYEAR && ((CURRMONTH+6)/12 >= 1) ) && this.month > sixMonths(CURRMONTH) ){
+                else if( (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month == (today.get(Calendar.MONTH) + 1)+6 && this.day > today.get(Calendar.DAY_OF_MONTH)) || 
+                            (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month > (today.get(Calendar.MONTH) + 1)+6) ||
+                            (this.year > today.get(Calendar.YEAR) && (((today.get(Calendar.MONTH) + 1)+6)/12 >= 1)  && this.month == sixMonths((today.get(Calendar.MONTH) + 1)) && this.day > today.get(Calendar.DAY_OF_MONTH) ) ||
+                            (this.year > today.get(Calendar.YEAR) && (((today.get(Calendar.MONTH) + 1)+6)/12 >= 1) ) && this.month > sixMonths((today.get(Calendar.MONTH) + 1)) ){
                                 throw new NullPointerException(toString() + ": Event date must be within 6 months!");
                             }
                 else if(this.day > 28)
@@ -98,13 +99,13 @@ public class Date implements Comparable<Date> {
             {
                 return isRegMonth;
             }
-            else if( this.year < CURRYEAR || (this.year == CURRYEAR && this.month < CURRMONTH) || (this.year == CURRYEAR && this.month == CURRMONTH && this.day < CURRDAY)){
+            else if( this.year < today.get(Calendar.YEAR) || (this.year == today.get(Calendar.YEAR) && this.month < (today.get(Calendar.MONTH) + 1)) || (this.year == today.get(Calendar.YEAR) && this.month == (today.get(Calendar.MONTH) + 1) && this.day < today.get(Calendar.DAY_OF_MONTH))){
                 throw new NullPointerException(toString() + ": Event date must be a future date!");
             } 
-            else if( (this.year == CURRYEAR && ( ((CURRMONTH+6)/12) == 0) && this.month == CURRMONTH+6 && this.day > CURRDAY) || 
-                        (this.year == CURRYEAR && ( ((CURRMONTH+6)/12) == 0) && this.month > CURRMONTH+6) ||
-                        (this.year > CURRYEAR && ((CURRMONTH+6)/12 >= 1)  && this.month == sixMonths(CURRMONTH) && this.day > CURRDAY ) ||
-                        (this.year > CURRYEAR && ((CURRMONTH+6)/12 >= 1) ) && this.month > sixMonths(CURRMONTH) ){
+            else if( (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month == (today.get(Calendar.MONTH) + 1)+6 && this.day > today.get(Calendar.DAY_OF_MONTH)) || 
+                        (this.year == today.get(Calendar.YEAR) && ( (((today.get(Calendar.MONTH) + 1)+6)/12) == 0) && this.month > (today.get(Calendar.MONTH) + 1)+6) ||
+                        (this.year > today.get(Calendar.YEAR) && (((today.get(Calendar.MONTH) + 1)+6)/12 >= 1)  && this.month == sixMonths((today.get(Calendar.MONTH) + 1)) && this.day > today.get(Calendar.DAY_OF_MONTH) ) ||
+                        (this.year > today.get(Calendar.YEAR) && (((today.get(Calendar.MONTH) + 1)+6)/12 >= 1) ) && this.month > sixMonths((today.get(Calendar.MONTH) + 1)) ){
                             throw new NullPointerException(toString() + ": Event date must be within 6 months!");
                         }
             else
@@ -203,7 +204,7 @@ public class Date implements Comparable<Date> {
         earlierDateTest();
         laterDateTest();
         laterMonthTest();
-        Date tempD = new Date("2/23/2024");
+        Date tempD = new Date("3/23/2024");
         System.out.println(tempD.isValid());
     }
 

@@ -4,11 +4,12 @@
  */
 public enum Department
 {
+    BAIT ("Business Analytics and Information Technology"),
     CS ("Computer Science"),
     EE ("Electrical Engineering"),
     ITI ("Information Technology and Informatics"),
-    MATH ("Mathematics"),
-    BAIT ("Business Analytics and Information Technology");
+    MATH ("Mathematics");
+
 
     public final String departmentName;
     /**
@@ -27,5 +28,13 @@ public enum Department
     public String getDepartmentName()
     {
         return this.departmentName;
+    }
+
+    public static void main (String[] args)
+    {
+        Department d = Department.valueOf("CS");
+        Department d2 = Department.valueOf("BAIT");
+        System.out.println(d.compareTo(d2));
+
     }
 }

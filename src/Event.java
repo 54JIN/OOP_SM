@@ -38,6 +38,8 @@ public class Event implements Comparable<Event> {
     public Location getLocation(){
         return this.location;
     }
+    public Contact getContact() {return this.contact;}
+
 
     public String endTime(){
         int hour = (duration/60) + ( ( duration%60 + startTime.minute )/60 );
