@@ -1,12 +1,21 @@
+import java.util.Scanner;
 /**
+ * Parses input from the user and processes their commands. Interface class.
  * @author Vivek Bhadkamkar (@vab85)
  * @author Sajin Saju (@ss3652)
  */
-
-import java.util.Scanner;
-
 public class EventOrganizer
 {
+    /**
+     * Creates a new event
+     * @param date string with date
+     * @param timeslot string with desired timeSlot
+     * @param location string with location name
+     * @param contact string with department name
+     * @param email email with @rutgers.edu
+     * @param duration integer representing number of minutes
+     * @return the created event
+     */
     public static Event createEvent(String date, String timeslot, String location, String contact, String email, int duration){
         try{
             Date tempD = new Date(date);
@@ -92,6 +101,9 @@ public class EventOrganizer
         }
     }
 
+    /**
+     * Runs client interface that they will use to interact with EventCalendar class
+     */
     public static void run() {
         /* 
             A 10/21/2023 afternoon hll114 cs cs@rutgers.edu 60

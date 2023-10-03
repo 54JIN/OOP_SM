@@ -1,21 +1,37 @@
 /**
+ * Event method, contains Date, Timeslot, Location, Contact, and duration of the event.
  * @author Vivek Bhadkamkar (@vab85)
  * @author Sajin Saju (@ss3652)
  */
 
 public class Event implements Comparable<Event> {
+    /**
+     * Event date
+     */
     private Date date; //the event date
+    /**
+     * Starting time
+     */
     private TimeSlot startTime; //the starting time
+    /**
+     * Location
+     */
     private Location location;
+    /**
+     * Department name and email
+     */
     private Contact contact; //include the department name and email
+    /**
+     * Duration of event in minutes
+     */
     private int duration; //in minutes
 
     /**
-     *
+     * Constructor for Event
      * @param date Event date, cannot be more than 6 months in future
      * @param startTime Starting time of event, morning, evening, or afternoon
      * @param location Location of event at a place in Rutgers
-     * @param contact Email address & department associated with event
+     * @param contact Email address and department associated with event
      * @param duration How long the event will last, between 30 and 120 mins
      */
     public Event(Date date, TimeSlot startTime, Location location, Contact contact, int duration){
@@ -44,7 +60,7 @@ public class Event implements Comparable<Event> {
     }
 
     /**
-     *
+     * Gets location and returns it
      * @return Location of event
      */
     public Location getLocation(){
@@ -52,13 +68,13 @@ public class Event implements Comparable<Event> {
     }
 
     /**
-     *
+     * Gets contact and returns it
      * @return Event's contact
      */
     public Contact getContact() {return this.contact;}
 
     /**
-     *
+     * Obtains end time of event using duration
      * @return Time which the event ends
      */
     public String endTime(){
@@ -75,7 +91,7 @@ public class Event implements Comparable<Event> {
     }
 
     /**
-     *
+     * ToString override to print out the event's details in a formatted output
      * @return String form of the event
      */
     @Override
@@ -85,7 +101,7 @@ public class Event implements Comparable<Event> {
     }
 
     /**
-     *
+     * Compares two timeSlots to aid the compareTo override
      * @param startTime start time of event
      * @param otherE Another event to be compared to
      * @return -1 if earlier, 0 if same time, 1 if later
@@ -118,7 +134,7 @@ public class Event implements Comparable<Event> {
             return 1;
     }
     /**
-     *
+     * Overrides compareTo and tells if an Event is earlier or later than another.
      * @param otherE the event to be compared.
      * @return  -1 if earlier, 0 if same time, 1 if later
      */
@@ -134,7 +150,7 @@ public class Event implements Comparable<Event> {
         return 1;
     }
     /**
-     *
+     * Checks if an event is the same as another event.
      * @param otherE the event to be compared
      * @return true if same, false if not.
      */
@@ -148,7 +164,7 @@ public class Event implements Comparable<Event> {
     }
 
 
-    public static void main(String[] args)
+ /*   public static void main(String[] args)
     {
         Date tempD = new Date("11/29/2023");
         TimeSlot tempT = TimeSlot.MORNING;
@@ -167,5 +183,5 @@ public class Event implements Comparable<Event> {
         System.out.println(temp);
         System.out.println(temp.compareTo(temp2));
         System.out.println(temp.equals(temp2));
-    }
+    }*/
 }

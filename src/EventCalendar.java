@@ -1,17 +1,25 @@
 /**
+ * EventCalendar class that holds an array of Events, can add and remove elements and print out the contents of the array, sorted if desired.
  * @author Vivek Bhadkamkar (@vab85)
  * @author Sajin Saju (@ss3652)
  */
-
-
 public class EventCalendar {
+    /**
+     * Array to hold a list of events
+     */
     private Event [] events; //the array holding the list of events
+    /**
+     * Current number of events in the array
+     */
     private int numEvents; //current number of events in the array
+    /**
+     * Constant to indicate if event is not found in an array
+     */
     public static final int NOT_FOUND = -1;
 
     /**
-     *
-     * @param event
+     * Searches for the index of an event in events array
+     * @param event Event to be found
      * @return Index of event if found, NOT_FOUND if no event found.
      */
     private int find(Event event) { //search an event in the list
@@ -48,7 +56,7 @@ public class EventCalendar {
     }
 
     /**
-     *
+     * Checks last 4 elements of events[] array to see if it's empty or not
      * @return false if there's an element in the last 4 spaces of the array, true if there are no elements in those 4 spaces
      */
     private boolean last4(){
@@ -61,8 +69,8 @@ public class EventCalendar {
     }
 
     /**
-     *
-     * @param j
+     * Refactors the events array
+     * @param j int to help with refactoring
      */
     private void refactor(int j){
         Event[] temp = new Event[events.length];
@@ -92,7 +100,7 @@ public class EventCalendar {
 
 
     /**
-     *
+     * Adds events to the events[] array
      * @param event the event to be added
      * @return true if event successfully added, false if not
      */
@@ -131,7 +139,7 @@ public class EventCalendar {
     }
 
     /**
-     *
+     * Removes events from the events[] array
      * @param event the event to be removed
      * @return true if event was removed, false if not
      */
@@ -154,7 +162,7 @@ public class EventCalendar {
     }
 
     /**
-     *
+     * Checks if events[] contains a given event
      * @param event the event that is checked for existence in the array
      * @return true if event was found in array, false if event is not in array
      */
@@ -326,39 +334,4 @@ public class EventCalendar {
          }
      }
 
-
-
-    public static void main(String[] args)
-    {
-        Date tempD = new Date("11/29/2023");
-        TimeSlot tempT = TimeSlot.MORNING;
-        Location tempL = Location.HLL114;
-        Contact tempC = new Contact(Department.BAIT, "bait@rutgers.edu");
-        int duration = 65;
-        Event tempE = new Event(tempD,tempT,tempL,tempC, duration);
-
-        Date tempD1 = new Date("10/09/2023");
-        TimeSlot tempT1 = TimeSlot.AFTERNOON;
-        Location tempL1 = Location.ARC103;
-        Contact tempC1 = new Contact(Department.CS, "cs@rutgers.edu");
-        int duration1 = 85;
-        Event tempE1 = new Event(tempD1,tempT1,tempL1,tempC1, duration1);
-
-
-
-        EventCalendar tempEC = new EventCalendar();
-
-        tempEC.print();
-
-        //tempEC.remove(tempE2);
-
-        //tempEC.print();
-
-        tempEC.printByCampus();
-
-        tempEC.printByDepartment();
-
-        tempEC.printByDate();
-
-    }
 }

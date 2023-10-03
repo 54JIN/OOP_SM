@@ -1,25 +1,59 @@
+import java.util.Calendar;
 /**
+ * Creates Date with year, month, and day and provides method isValid() to check if the date is valid
  * @author Vivek Bhadkamkar (@vab85)
  * @author Sajin Saju (@ss3652)
  */
-import java.util.Calendar;
 public class Date implements Comparable<Date> {
+    /**
+     * Year
+     */
     private int year;
+    /**
+     * Month
+     */
     private int month;
+    /**
+     * Day
+     */
     private int day;
 
     //Define constants to be used for isValid()
+    /**
+     * QUADRENNIAL assignment for isLeapYear
+     */
     public static final int QUADRENNIAL = 4;
+    /**
+     * CENTENNIAL assignment for isLeapYear
+     */
     public static final int CENTENNIAL = 100;
+    /**
+     * QUARTERCENTENNIAL assignment for isLeapYear
+     */
     public static final int QUARTERCENTENNIAL = 400;
+    /**
+     * Define months with 31 days as a REGMONTH
+     */
     public static final int[] REGMONTH = {1,3,5,7,8,10,12}; //A month with 31 days is a REGMONTH
+    /**
+     * Define the length of a REGMONTH as 31 (days)
+     */
     public static final int REGMONTHLENGTH = 31;
+    /**
+     * Define the number of months in a year
+     */
     public static final int NUMMONTHSINYEAR = 12;
+    /**
+     * Define integer value for February
+     */
     public static final int FEBRUARY = 2;
+    /**
+     * Create calendar object to check the current date
+     */
     private Calendar today = Calendar.getInstance();
 
     /**
-     *
+     * Constructor that creates a date object from year, month, and day
      * @param month Month in Year
      * @param day Day of the month
      * @param year Year
@@ -32,7 +66,7 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
+     * Constructor that creates a date object from a string
      * @param dateString String for parsing a string input of Date.
      */
     public Date(String dateString) //Constructor that parses from date format (Ex. 9/20/2023) to obtain month, day, and year.
@@ -45,10 +79,8 @@ public class Date implements Comparable<Date> {
 
     }
 
-
-
     /**
-     *
+     * Checks the month 6 months ahead of the current month
      * @param month The current month represented as number from 1-12
      * @return a value indicating whether the month is 6 months ahead or not.
      */
@@ -56,7 +88,7 @@ public class Date implements Comparable<Date> {
         return (month+6)%12;
     }
     /**
-     *
+     * Checks if a given date is valid according to specifications of being in the future, but not more than 6 months in the future.
      * @return true or false depending on whether the date is valid or not.
      */
     public boolean isValid()
@@ -101,7 +133,7 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
+     * Checks if a month has 31 days or not
      * @param month Month to be checked if it has 31 days or not
      * @return true if Jan, Mar, May, July, Aug, Oct, or Dec; false otherwise
      */
@@ -117,7 +149,7 @@ public class Date implements Comparable<Date> {
         return false;
     }
     /**
-     *
+     * Checks if a year is a leap year or not
      * @param year Enter year to check if this year is a leap year or not.
      * @return true or false depending on whether it's a leap year or not.
      */
@@ -147,6 +179,7 @@ public class Date implements Comparable<Date> {
         }
     }
     /**
+     * Compares two dates to see which one happens earlier and which one happens later
      * @param date The date to be compared to
      * @return 1 if this.date is later, 0 if they are on the same date, -1 if  this.date is earlier
      */
@@ -167,12 +200,13 @@ public class Date implements Comparable<Date> {
         }
     }
     /**
-     *
+     * Formats date values into a string
      * @return String form of the date.
      */
     @Override
     public String toString(){return (month + "/" + day + "/" + year);}
-    public static void main (String[] args)
+
+    /*public static void main (String[] args)
     {
         notCurrDateTest();
         validDateTest();
@@ -187,9 +221,9 @@ public class Date implements Comparable<Date> {
         laterMonthTest();
         Date tempD = new Date("3/23/2024");
         System.out.println(tempD.isValid());
-    }
+    }*/
 
-    //add javadoc stuff for testcases
+    /*add javadoc stuff for testcases
     private static void notCurrDateTest()
     {
         Date d = new Date("2/28/2003");
@@ -261,6 +295,6 @@ public class Date implements Comparable<Date> {
         System.out.println("Expected output: -1.");
         System.out.println(d.compareTo(d2));
     }
-
+    */
 
 }

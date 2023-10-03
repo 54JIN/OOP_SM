@@ -2,24 +2,44 @@
  * @author Vivek Bhadkamkar (@vab85)
  * @author Sajin Saju (@ss3652)
  */
-
-import java.util.Scanner;
-
 public enum Location
 {
+    /**
+     * Location #1: Allison Road Classroom
+     */
     ARC103("Allison Road Classroom", "Busch"),
+    /**
+     * Location #2: Academic Building
+     */
     AB2225("Academic Building", "College Avenue"),
+    /**
+     * Location #3: Beck Hall
+     */
     BE_AUD("Beck Hall", "Livingston"),
+    /**
+     * Location #4: Hill Center
+     */
     HLL114 ("Hill Center", "Busch"),
+    /**
+     * Location #5: Murray Hall
+     */
     MU302("Murray Hall", "College Avenue"),
+    /**
+     * Location #6: Tillett Hall
+     */
     TIL232("Tillett Hall", "Livingston");
 
-
-    
+    /**
+     * Name of building
+     */
     public final String buildingName;
+    /**
+     * Name of campus
+     */
     public final String campus;
 
     /**
+     * Returns building name
      * @return Building name associated with enum location
      */
     public String getBuildingName()
@@ -28,6 +48,7 @@ public enum Location
     }
 
     /**
+     * Returns campus name
      * @return Campus name associated with enum location
      */
     public String getCampus()
@@ -36,7 +57,7 @@ public enum Location
     }
 
     /**
-     *
+     * Constructor to assign properties buildingName and campus to Location
      * @param buildingName Building name property associated with location
      * @param campus Campus property associated with location
      */
@@ -46,15 +67,5 @@ public enum Location
         this.campus = campus;
     }
 
-    public static void main(String[] args)
-    {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a location: \n");
-        String locString = sc.nextLine();
-        Location location = Location.valueOf(locString);
-        String locString2 = sc.nextLine();
-        Location l2 = Location.valueOf(locString2);
-        System.out.println(location.compareTo(l2));
-    }
 
 }
