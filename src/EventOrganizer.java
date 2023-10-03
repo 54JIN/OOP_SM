@@ -160,7 +160,9 @@ public class EventOrganizer
                         }
                     }
                     else{
-                        System.out.println(textCommand + " is an invalid command!");
+                        if(!textCommand.equals("")) {
+                            System.out.println(textCommand + " is an invalid command!");
+                        }
                     }
                 }
                 catch (NullPointerException e){
