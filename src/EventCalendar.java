@@ -101,6 +101,7 @@ public class EventCalendar {
             Event[] temp = new Event[4]; 
             temp[0] = event;
             events = temp;
+            numEvents = events.length;
             return true;
         }
         if(contains(event)){
@@ -113,13 +114,14 @@ public class EventCalendar {
                 // System.out.println("made it grow");
                 grow();
                 events[i+1] = event;
-                // System.out.println("Finished events length: " + events.length);
+                numEvents = events.length;
                 return true;
             }
             else if(events[i] == null){
                 // System.out.println("added on");
                 events[i] = event;
                 // System.out.println("Finished events length: " + events.length);
+                numEvents = events.length;
                 return true;
             }
             i++;
@@ -143,9 +145,11 @@ public class EventCalendar {
                 if(last4()){
                     shrink();
                 }
+                numEvents = events.length;
                 return true;
             }
         }
+        numEvents = events.length;
         return false;
     }
 
