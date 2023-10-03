@@ -166,29 +166,15 @@ public class Event implements Comparable<Event> {
 
    public static void main(String[] args)
     {
-        Date tempD = new Date("11/29/2023");
-        TimeSlot tempT = TimeSlot.MORNING;
-        Location tempL = Location.HLL114;
-        Contact tempC = new Contact(Department.BAIT, "bait@rutgers.edu");
-        int duration = 65;
-        Event temp = new Event(tempD,tempT,tempL,tempC, duration);
-
-        Date tempD2 = new Date("11/29/2023");
-        TimeSlot tempT2 = TimeSlot.MORNING;
-        Location tempL2 = Location.AB2225;
-        Contact tempC2 = new Contact(Department.BAIT, "bait@rutgers.edu");
-        int duration2 = 65;
-        Event temp2 = new Event(tempD2,tempT2,tempL2,tempC2, duration2);
-
-        System.out.println(temp);
-        System.out.println(temp.compareTo(temp2));
-        System.out.println(temp.equals(temp2));
+        differentLocations();
     }
     private static void differentLocations()
     {
         Date d = new Date("11/21/23");
         Date d2 = new Date("11/21/23");
-        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"). 120);
-        Event e2 = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"). 120);
+        Event e = new Event(d, TimeSlot.MORNING, Location.TIL232, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        Event e2 = new Event(d, TimeSlot.MORNING, Location.AB2225, new Contact(Department.MATH, "math@rutgers.edu"), 120);
+        System.out.println("Expected output: false");
+        System.out.println(e.equals(e2));
     }
 }
